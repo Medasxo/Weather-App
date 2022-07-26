@@ -19,9 +19,11 @@ async function getLocationInformation(location) {
     return weatherObject;
 }
 
-async function displayInformation (){
-    let weatherObject = await getLocationInformation("Vilnius");
+async function displayInformation (location){
+    let weatherObject = await getLocationInformation(location);
+    let locationName = document.querySelector(".locationName");
+    locationName.textContent = weatherObject.name;
     console.log(weatherObject);
 }
-displayInformation();
+displayInformation("Vilnius");
    
