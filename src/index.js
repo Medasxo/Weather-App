@@ -1,4 +1,11 @@
 import "./style.css";
+import Sun from "./sun.png";
+import Snowflake from "./snowflake.png";
+import Clouds from "./clouds-and-sun.png";
+import Rain from "./rainy.png";
+
+let units =  "metric";
+
 class weatherInfo {
   constructor(name, temperatures) {
     this.name = name;
@@ -11,7 +18,8 @@ async function getLocationInformation(location) {
   const response = await fetch(
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
       location +
-      "&APPID=6d59b255cd4521630de93aa232d082f9&units=metric",
+      "&APPID=6d59b255cd4521630de93aa232d082f9&units=" +
+      units,
     { mode: "cors" },
     { method: "GET" }
   );
@@ -22,7 +30,7 @@ async function getLocationInformation(location) {
     return 0;
   }
   const errorTab = document.querySelector(".errorTab");
-  errorTab.textContent = '';
+  errorTab.textContent = "";
   const data = await response.json();
   locationName = data.city.name;
   listOfTemperatures = data.list;
@@ -33,8 +41,18 @@ async function getLocationInformation(location) {
 async function displayInformation(location) {
   let weatherObject = await getLocationInformation(location);
   if (weatherObject !== 0) {
-    let locationName = document.querySelector(".locationName");
+    const locationName = document.querySelector(".locationName");
     locationName.textContent = weatherObject.name;
+
+    const temperatureNow = document.querySelector(".temperatureNow");
+    const temperatureDisplay = document.createElement("div");
+    temperatureDisplay.className = "temperatureDisplayNow";
+    temperatureDisplay.textContent = Math.trunc(weatherObject.temperatures[0].main.temp) + checkUnits(units);
+    const temperatureIcon = new Image();
+    temperatureIcon.src = checkWeather(weatherObject.temperatures[0].weather[0].main);
+    
+    temperatureDisplay.appendChild(temperatureIcon);
+    temperatureNow.appendChild(temperatureDisplay);
     console.log(weatherObject);
   }
 }
@@ -46,4 +64,29 @@ searchBar.addEventListener("keydown", (e) => {
     displayInformation(searchBar.value);
   }
 });
+
+function checkWeather(weather){
+  if(weather === "Clouds"){
+    return Clouds;
+  }
+  else if(weather === "Rain"){
+    return Rain;
+  }
+  else if(weather === "Snow"){
+    return Snowflake;
+  }
+  else{
+    return Sun;
+  }
+}
+
+function checkUnits(units){
+  if(units === "imperial"){
+    return "°F";
+  }
+  else{
+    return "°C";
+  }
+}
+
 displayInformation("vilnius");

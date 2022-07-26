@@ -56,7 +56,56 @@ html {
 }
 
 .searchContainer img {
-  margin-left: 10px;
+  padding-left: 10px;
   height: 65%;
   width: 3%;
+}
+.main {
+  margin-top: 30px;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  gap: 10%;
+}
+
+.locationName {
+  font-size: 50px;
+}
+
+.temperatureNow {
+  width: 100%;
+  height: 30%;
+  display: grid;
+  grid-template: 1fr / 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+}
+
+.temperatureDisplayNow {
+  grid-column: 2/3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+}
+.temperatureDisplayNow img {
+  width: 30%;
+  height: 30%;
+  -webkit-filter: grayscale(1) invert(1);
+  filter: grayscale(1) invert(1);
+}
+.temperaturesTab {
+  background-color: brown;
+  width: 100%;
+  height: 60%;
+  display: grid;
+  grid-template: 1fr / 1fr 1fr 1fr 1fr;
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
 }
