@@ -44,16 +44,15 @@ async function displayInformation(location) {
   let weatherObject = await getLocationInformation(location);
   if (weatherObject !== 0) {
     let deletePrevious = document.querySelector(".temperatureNow");
-    while(deletePrevious.firstChild){
+    while (deletePrevious.firstChild) {
       deletePrevious.removeChild(deletePrevious.lastChild);
     }
-    
+
     let dayDeletePrevious = document.querySelectorAll(".day");
-    if(dayDeletePrevious !== null){
-      dayDeletePrevious.forEach(dayPrevious => {
+    if (dayDeletePrevious !== null) {
+      dayDeletePrevious.forEach((dayPrevious) => {
         dayPrevious.remove();
-      })
-      
+      });
     }
 
     const locationName = document.querySelector(".locationName");
@@ -91,7 +90,6 @@ async function displayInformation(location) {
     temperatureNow.appendChild(temperatureDisplay);
     temperatureNow.appendChild(windSpeed);
 
-    console.log(weatherObject);
     const temperaturesTab = document.querySelector(".temperaturesTab");
     let weatherForecastCount = 0;
     for (let i = 0; i <= weatherObject.temperatures.length - 1; i++) {
@@ -126,7 +124,6 @@ async function displayInformation(location) {
 const searchBar = document.querySelector(".searchBar");
 searchBar.addEventListener("keydown", (e) => {
   if (e.code === "Enter") {
-    console.log(searchBar.value);
     displayInformation(searchBar.value);
   }
 });
