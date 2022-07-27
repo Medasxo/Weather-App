@@ -43,10 +43,19 @@ async function getLocationInformation(location) {
 async function displayInformation(location) {
   let weatherObject = await getLocationInformation(location);
   if (weatherObject !== 0) {
-    let deletePrevious = document.querySelector(".temperatureDisplayNow");
-    if (deletePrevious !== null) {
-      deletePrevious.remove();
+    let deletePrevious = document.querySelector(".temperatureNow");
+    while(deletePrevious.firstChild){
+      deletePrevious.removeChild(deletePrevious.lastChild);
     }
+    
+    let dayDeletePrevious = document.querySelectorAll(".day");
+    if(dayDeletePrevious !== null){
+      dayDeletePrevious.forEach(dayPrevious => {
+        dayPrevious.remove();
+      })
+      
+    }
+
     const locationName = document.querySelector(".locationName");
     locationName.textContent = weatherObject.name;
 

@@ -123,6 +123,7 @@ html {
   justify-content: center;
   align-items: center;
   font-size: clamp(1rem, 1.5vw, 6rem);
+  gap: 10px;
 }
 
 .day img {
