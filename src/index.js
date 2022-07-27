@@ -54,21 +54,24 @@ async function displayInformation(location) {
     const temperatureDisplay = document.createElement("div");
     temperatureDisplay.className = "temperatureDisplayNow";
     temperatureDisplay.textContent =
-      Math.trunc(weatherObject.temperatures[0].main.temp) + checkUnitsWeather(units);
+      Math.trunc(weatherObject.temperatures[0].main.temp) +
+      checkUnitsWeather(units);
     const temperatureIcon = new Image();
     temperatureIcon.src = checkWeather(
       weatherObject.temperatures[0].weather[0].main
     );
-    
+
     const windSpeed = document.createElement("div");
     windSpeed.className = "windSpeed";
-    windSpeed.textContent = weatherObject.temperatures[0].wind.speed + checkUnitsWind(units);
+    windSpeed.textContent =
+      weatherObject.temperatures[0].wind.speed + checkUnitsWind(units);
     const windIcon = new Image();
     windIcon.src = Wind;
 
     const humidityIndex = document.createElement("div");
     humidityIndex.className = "humidityIndex";
-    humidityIndex.textContent = weatherObject.temperatures[0].main.humidity + " %";
+    humidityIndex.textContent =
+      weatherObject.temperatures[0].main.humidity + " %";
     const humidityIcon = new Image();
     humidityIcon.src = Humidity;
 
@@ -78,7 +81,36 @@ async function displayInformation(location) {
     temperatureNow.appendChild(humidityIndex);
     temperatureNow.appendChild(temperatureDisplay);
     temperatureNow.appendChild(windSpeed);
+
     console.log(weatherObject);
+    const temperaturesTab = document.querySelector(".temperaturesTab");
+    let weatherForecastCount = 0;
+    for (let i = 0; i <= weatherObject.temperatures.length - 1; i++) {
+      let date = new Date(weatherObject.temperatures[i].dt_txt);
+      if (date.getHours() === 12 && weatherForecastCount !== 4) {
+        const day = document.createElement("div");
+        day.className = "day";
+        const dayDisplay = document.createElement("p");
+        dayDisplay.textContent = date.toLocaleDateString("en-us", {
+          weekday: "long",
+        });
+        const dayTemperature = document.createElement("p");
+        dayTemperature.textContent =
+          Math.trunc(weatherObject.temperatures[i].main.temp) +
+          checkUnitsWeather(units);
+
+        const dayTemperatureIcon = new Image();
+        dayTemperatureIcon.src = checkWeather(
+          weatherObject.temperatures[i].weather[0].main
+        );
+
+        day.appendChild(dayDisplay);
+        day.appendChild(dayTemperature);
+        day.appendChild(dayTemperatureIcon);
+        temperaturesTab.appendChild(day);
+        weatherForecastCount++;
+      }
+    }
   }
 }
 
@@ -110,11 +142,10 @@ function checkUnitsWeather(units) {
   }
 }
 
-function checkUnitsWind(units){
-  if(units === "imperial"){
+function checkUnitsWind(units) {
+  if (units === "imperial") {
     return " mph";
-  }
-  else{
+  } else {
     return " km/h";
   }
 }
