@@ -3,8 +3,9 @@ import Sun from "./sun.png";
 import Snowflake from "./snowflake.png";
 import Clouds from "./clouds-and-sun.png";
 import Rain from "./rainy.png";
+import Wind from "./windIcon.png";
 
-let units =  "metric";
+let units = "metric";
 
 class weatherInfo {
   constructor(name, temperatures) {
@@ -41,18 +42,33 @@ async function getLocationInformation(location) {
 async function displayInformation(location) {
   let weatherObject = await getLocationInformation(location);
   if (weatherObject !== 0) {
+    let deletePrevious = document.querySelector(".temperatureDisplayNow");
+    if (deletePrevious !== null) {
+      deletePrevious.remove();
+    }
     const locationName = document.querySelector(".locationName");
     locationName.textContent = weatherObject.name;
 
     const temperatureNow = document.querySelector(".temperatureNow");
     const temperatureDisplay = document.createElement("div");
     temperatureDisplay.className = "temperatureDisplayNow";
-    temperatureDisplay.textContent = Math.trunc(weatherObject.temperatures[0].main.temp) + checkUnits(units);
+    temperatureDisplay.textContent =
+      Math.trunc(weatherObject.temperatures[0].main.temp) + checkUnitsWeather(units);
     const temperatureIcon = new Image();
-    temperatureIcon.src = checkWeather(weatherObject.temperatures[0].weather[0].main);
+    temperatureIcon.src = checkWeather(
+      weatherObject.temperatures[0].weather[0].main
+    );
     
+    const windSpeed = document.createElement("div");
+    windSpeed.className = "windSpeed";
+    windSpeed.textContent = weatherObject.temperatures[0].wind.speed + checkUnitsWind(units);
+    const windIcon = new Image();
+    windIcon.src = Wind;
+
+    windSpeed.appendChild(windIcon);
     temperatureDisplay.appendChild(temperatureIcon);
     temperatureNow.appendChild(temperatureDisplay);
+    temperatureNow.appendChild(windSpeed);
     console.log(weatherObject);
   }
 }
@@ -65,27 +81,32 @@ searchBar.addEventListener("keydown", (e) => {
   }
 });
 
-function checkWeather(weather){
-  if(weather === "Clouds"){
+function checkWeather(weather) {
+  if (weather === "Clouds") {
     return Clouds;
-  }
-  else if(weather === "Rain"){
+  } else if (weather === "Rain") {
     return Rain;
-  }
-  else if(weather === "Snow"){
+  } else if (weather === "Snow") {
     return Snowflake;
-  }
-  else{
+  } else {
     return Sun;
   }
 }
 
-function checkUnits(units){
-  if(units === "imperial"){
+function checkUnitsWeather(units) {
+  if (units === "imperial") {
     return "°F";
+  } else {
+    return "°C";
+  }
+}
+
+function checkUnitsWind(units){
+  if(units === "imperial"){
+    return " mph";
   }
   else{
-    return "°C";
+    return " km/h";
   }
 }
 

@@ -83,7 +83,7 @@ html {
   justify-content: center;
 }
 
-.temperatureDisplayNow {
+.temperatureDisplayNow, .windSpeed{
   grid-column: 2/3;
   display: flex;
   flex-direction: column;
@@ -91,7 +91,11 @@ html {
   align-items: center;
   font-size: 40px;
 }
-.temperatureDisplayNow img {
+
+.windSpeed{
+  grid-column: 3;
+}
+.temperatureDisplayNow img, .windSpeed img {
   width: 30%;
   height: 30%;
   -webkit-filter: grayscale(1) invert(1);
