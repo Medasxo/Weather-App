@@ -4,6 +4,7 @@ import Snowflake from "./snowflake.png";
 import Clouds from "./clouds-and-sun.png";
 import Rain from "./rainy.png";
 import Wind from "./windIcon.png";
+import Humidity from "./humidityIcon.png";
 
 let units = "metric";
 
@@ -65,8 +66,16 @@ async function displayInformation(location) {
     const windIcon = new Image();
     windIcon.src = Wind;
 
+    const humidityIndex = document.createElement("div");
+    humidityIndex.className = "humidityIndex";
+    humidityIndex.textContent = weatherObject.temperatures[0].main.humidity + " %";
+    const humidityIcon = new Image();
+    humidityIcon.src = Humidity;
+
+    humidityIndex.appendChild(humidityIcon);
     windSpeed.appendChild(windIcon);
     temperatureDisplay.appendChild(temperatureIcon);
+    temperatureNow.appendChild(humidityIndex);
     temperatureNow.appendChild(temperatureDisplay);
     temperatureNow.appendChild(windSpeed);
     console.log(weatherObject);
@@ -95,9 +104,9 @@ function checkWeather(weather) {
 
 function checkUnitsWeather(units) {
   if (units === "imperial") {
-    return "°F";
+    return " °F";
   } else {
-    return "°C";
+    return " °C";
   }
 }
 

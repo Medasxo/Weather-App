@@ -83,7 +83,7 @@ html {
   justify-content: center;
 }
 
-.temperatureDisplayNow, .windSpeed{
+.temperatureDisplayNow, .windSpeed, .humidityIndex{
   grid-column: 2/3;
   display: flex;
   flex-direction: column;
@@ -95,7 +95,11 @@ html {
 .windSpeed{
   grid-column: 3;
 }
-.temperatureDisplayNow img, .windSpeed img {
+
+.humidityIndex{
+  grid-column: 1;
+}
+.temperatureDisplayNow img, .windSpeed img, .humidityIndex img{
   width: 30%;
   height: 30%;
   -webkit-filter: grayscale(1) invert(1);
